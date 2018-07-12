@@ -1,0 +1,16 @@
+**__*__
+*~
+**.pyc
+**.csv
+**.DS_Store
+**.ipynb_checkpoints/
+**/input/**
+**/logs/**
+**/weights/**
+!**/logs/README.md
+!**/input/README.md
+!**/weights/README.md
+**/build/**
+**.idea/
+
+** 25d8f340d839c3258fa7819f6581ab7be04dcd6c
