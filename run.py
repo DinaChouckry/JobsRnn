@@ -16,11 +16,11 @@ https://bugs.python.org/issue9694
 # """
 # Experiment Parameters
 # """
-# parser.add_argument('--exp-name', type=str, default='dummy', help='experiment name to used across everything',  required=True)
+parser.add_argument('--exp-name', type=str, default='dummy', help='experiment name to used across everything',  required=True)
 parser.add_argument('--random-seed', type=int, default=120, help='random seed')
 # # parser.add_argument('--num-gpus', type=int, default=1, help='number of GPUs to be used')
 parser.add_argument('--num-workers', type=int, default=2, help='number of workers to be used')
-# parser.add_argument('--cpu-only', action='store_true', default=False, help='use cpu only to train')
+parser.add_argument('--cpu-only', action='store_true', default=False, help='use cpu only to train')
 # parser.add_argument('--experimental', action='store_true', default=False, help='enable experimental setup')
 # parser.add_argument('--data-sample', type=int, default=1000, help='data sample size; iff experimental setup')
 # parser.add_argument('--print-freq', '-p', default=100, type=int, help='print frequency')
@@ -29,7 +29,7 @@ parser.add_argument('--num-workers', type=int, default=2, help='number of worker
 # parser.add_argument('--start-epoch', default=0, type=int, help='manual epoch number (useful on restarts)')
 # parser.add_argument('--resume-type', type=str,  help='load from best/last checkpoint')
 # parser.add_argument('--initial-weights-exp-name', type=str,  help='load weights from specific experiment name')
-# parser.add_argument('--gpu-device-id', type=str, default='0', help='run on specific gpu device id')
+parser.add_argument('--gpu-device-id', type=str, default='0', help='run on specific gpu device id')
 
 """ Input Parameters """
 package_root = "JobsRnnLocal/"
@@ -40,7 +40,7 @@ parser.add_argument('--input-dir', type=str, default=package_root + 'input/', he
 parser.add_argument('--train-csv', type=str, default='train_21M.csv', help='train csv file')
 # parser.add_argument('--test-csv', type=str, default='test.csv', help='test csv file')
 # parser.add_argument('--manual-test-csv', type=str, default='manual-test.csv', help='test csv file')
-# parser.add_argument('--log-dir', type=str, default=package_root + 'logs/', help='logs root dir')
+parser.add_argument('--log-dir', type=str, default=package_root + 'logs/', help='logs root dir')
 # parser.add_argument('--weights-dir', type=str, default=package_root + 'weights/', help='weights root dir')
 
 # """ Train Parameters """
