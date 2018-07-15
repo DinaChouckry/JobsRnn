@@ -52,19 +52,20 @@ parser.add_argument('--test-frac', type=float, default=0.1, help='test size frac
 # parser.add_argument('--name-length', type=int, default=60, help='fixed name length')
 
 # """ Network Parameters"""
-# parser.add_argument('--hidden-size', type=int, default=256, help='hidden size')
-# parser.add_argument('--num-layers', type=int, default=1,  help='number of rnn layers to use')
-# parser.add_argument('--learning-rate', type=float, default=1e-3, help='learning rate')
-# parser.add_argument('--dropout', type=float, default=0, help='dropout ratio')
-# parser.add_argument('--max-grad-norm', type=float, default=2,
-#                     help='maximum gradient clipping normalization')
+parser.add_argument('--hidden-size', type=int, default=256, help='hidden size')
+parser.add_argument('--output-size', type=int, default=50, help='output size')
+parser.add_argument('--num-layers', type=int, default=1,  help='number of rnn layers to use')
+parser.add_argument('--learning-rate', type=float, default=1e-3, help='learning rate')
+parser.add_argument('--dropout', type=float, default=0, help='dropout ratio')
+# parser.add_argument('--max-grad-norm', type=float, default=2,help='maximum gradient clipping normalization')
 # parser.add_argument('--teacher-forcing-ratio', type=float, default=0.5, help='probability of using teacher forcing')
 parser.add_argument('--embedding-vec-size', type=int, default=100, help='char embedding vec size')
 # parser.add_argument('--fixed-embeddings', action='store_true', default=False, help='embeddings are static')
-# parser.add_argument('--weight-decay', type=float, default=1e-5, help='L2 weight regularization')
-# parser.add_argument('--rnn-type', type=str, default="GRU", help='RNN cell type')
-# parser.add_argument('--bidirectional', action='store_true', default=False, help='use bi-directional rnn')
+parser.add_argument('--weight-decay', type=float, default=1e-5, help='L2 weight regularization')
+parser.add_argument('--rnn-type', type=str, default="RNN", help='RNN cell type')
+parser.add_argument('--bidirectional', action='store_true', default=False, help='use bi-directional rnn')
 # parser.add_argument('--attention', action='store_true', default=False, help='use attention')
+
 
 
 def _main():
