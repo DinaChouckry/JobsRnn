@@ -20,7 +20,7 @@ parser.add_argument('--exp-name', type=str, default='dummy', help='experiment na
 parser.add_argument('--random-seed', type=int, default=120, help='random seed')
 # # parser.add_argument('--num-gpus', type=int, default=1, help='number of GPUs to be used')
 parser.add_argument('--num-workers', type=int, default=2, help='number of workers to be used')
-parser.add_argument('--cpu-only', action='store_true', default=False, help='use cpu only to train')
+parser.add_argument('--cpu-only', action='store_true', default=True, help='use cpu only to train')
 # parser.add_argument('--experimental', action='store_true', default=False, help='enable experimental setup')
 # parser.add_argument('--data-sample', type=int, default=1000, help='data sample size; iff experimental setup')
 # parser.add_argument('--print-freq', '-p', default=100, type=int, help='print frequency')
@@ -37,10 +37,10 @@ package_root = "JobsRnnLocal/"
 parser.add_argument('--input-dir', type=str, default=package_root + 'input/', help='root input dir')
 # parser.add_argument('--train-dir', type=str, default=package_root + 'train/', help='train root  dir')
 # parser.add_argument('--test-dir', type=str, default=package_root + 'test/', help='test root dir')
-parser.add_argument('--train-csv', type=str, default='train_21M.csv', help='train csv file')
+parser.add_argument('--train-csv', type=str, default='jobs_input.csv', help='train csv file')
 # parser.add_argument('--test-csv', type=str, default='test.csv', help='test csv file')
 # parser.add_argument('--manual-test-csv', type=str, default='manual-test.csv', help='test csv file')
-parser.add_argument('--log-dir', type=str, default=package_root + 'logs/', help='logs root dir')
+parser.add_argument('--log-dir', type=str, default= package_root + 'logs/', help='logs root dir')
 # parser.add_argument('--weights-dir', type=str, default=package_root + 'weights/', help='weights root dir')
 
 # """ Train Parameters """
@@ -53,7 +53,7 @@ parser.add_argument('--test-frac', type=float, default=0.1, help='test size frac
 
 # """ Network Parameters"""
 parser.add_argument('--hidden-size', type=int, default=256, help='hidden size')
-parser.add_argument('--output-size', type=int, default=50, help='output size')
+parser.add_argument('--output-size', type=int, default=25, help='output size')
 parser.add_argument('--num-layers', type=int, default=1,  help='number of rnn layers to use')
 parser.add_argument('--learning-rate', type=float, default=1e-3, help='learning rate')
 parser.add_argument('--dropout', type=float, default=0, help='dropout ratio')
