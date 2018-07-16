@@ -96,4 +96,7 @@ class DatasetSplittingGenerator(Dataset):
         # (batch , 1) = (1,batch)
         job_id = job_id.transpose(0,1)
 
+        #(batch,1) = (1,batch)
+        len_full_job = len_full_job.transpose(0,1)
+
         return  job_id, seq_full_job, len_full_job

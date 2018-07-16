@@ -9,12 +9,12 @@ from tqdm import tqdm
 import random
 
 class nnTrainer:
-    def __init__(self, rnn, args, vocab, manual_test_loader, manual_test_writer, criterion , device):
+    def __init__(self, rnn, args, vocab, loader, logger, criterion , device):
         self.args = args
         self.rnn = rnn
         self.vocab = vocab
-        self.manual_test_loader = manual_test_loader
-        self.manual_test_writer = manual_test_writer
+        self.loader = loader
+        self.logger = logger
         self.criterion = criterion
         self.device = device
         return
@@ -30,9 +30,9 @@ class nnTrainer:
         return batch_size, (seq_full_job, job_id, len_full_job)
 
 
-    def __run_model(self, is_train , batch, rnn_optimizer, save_predictions):
+    def __run_model(self, is_train , s_batch, rnn_optimizer, save_predictions):
         with torch.set_grad_enabled(is_train):
-            job_id, seq_full_job, len_full_job = batch
+            job_id, seq_full_job, len_full_job = s_batch
             if is_train:
                 rnn_optimizer.zero_grad()
             rnn_output, rnn_hidden = self.rnn(seq_full_job, len_full_job)

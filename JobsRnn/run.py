@@ -26,7 +26,7 @@ parser.add_argument('--cpu-only', action='store_true', default=False, help='use 
 # parser.add_argument('--print-freq', '-p', default=100, type=int, help='print frequency')
 # parser.add_argument('--save-freq', default=100, type=int, help='save weights frequency')
 # parser.add_argument('--manual-test-freq', default=500, type=int, help='test frequency against manual provided sample')
-# parser.add_argument('--start-epoch', default=0, type=int, help='manual epoch number (useful on restarts)')
+parser.add_argument('--start-epoch', default=0, type=int, help='manual epoch number (useful on restarts)')
 # parser.add_argument('--resume-type', type=str,  help='load from best/last checkpoint')
 # parser.add_argument('--initial-weights-exp-name', type=str,  help='load weights from specific experiment name')
 parser.add_argument('--gpu-device-id', type=str, default='0', help='run on specific gpu device id')
@@ -45,7 +45,7 @@ parser.add_argument('--log-dir', type=str, default=package_root + 'logs/', help=
 
 # """ Train Parameters """
 parser.add_argument('--batch-size', type=int, default=1, help='batch size')
-# parser.add_argument('--epochs', type=int, default=20, help='number of epochs')
+parser.add_argument('--epochs', type=int, default=20, help='number of epochs')
 parser.add_argument('--valid-frac', type=float, default=0.1, help='validation size fraction')
 parser.add_argument('--test-frac', type=float, default=0.1, help='test size fraction')
 # parser.add_argument('--amount-of-noise', type=float, default=0.12, help='probability of adding noise string')

@@ -42,17 +42,18 @@ def run_experiment(args):
 
     """ Define Model, Optimization """
     embedding = transformation_helpers.generate_embedding(args)
-    rnn = RNN(embedding=embedding,
-              rnn_type=args.rnn_type,
-              hidden_size=args.hidden_size,
-              num_layers=args.num_layers,
-              dropout=args.dropout,
-              output_size=args.output_size,
-              bidirectional=args.bidirectional).to(device)
+    # TODO : get output size form data ,not as argument
+    jobs_rnn = RNN(embedding=embedding,
+                   rnn_type=args.rnn_type,
+                   hidden_size=args.hidden_size,
+                   num_layers=args.num_layers,
+                   dropout=args.dropout,
+                   output_size=args.output_size,
+                   bidirectional=args.bidirectional).to(device)
 
-    rnn_optimizer = optim.Adam([p for p in rnn.parameters() if p.requires_grad], lr=args.learning_rate,weight_decay=args.weight_decay)
+    jobs_rnn_optimizer = optim.Adam([p for p in jobs_rnn.parameters() if p.requires_grad], lr=args.learning_rate, weight_decay=args.weight_decay)
     criterion = nn.CrossEntropyLoss()
-    operational_model = nnTrainer(rnn, args, transformation_helpers.vocab ,train_dataset, train_tb_logger, criterion, device)
+    operational_model = nnTrainer(jobs_rnn, args, transformation_helpers.vocab, train_dataset, train_tb_logger, criterion, device)
 
     """ End Model Definition """
 
@@ -61,7 +62,7 @@ def run_experiment(args):
     min_error = 1e8
     """ START TRAINING PHASE """
     for epoch in range(args.start_epoch, args.epochs + args.start_epoch):
-        train_error = operational_model.train_model(train_loader, rnn_optimizer, epoch, train_tb_logger, min_error)
+        train_error = operational_model.train_model(train_loader, jobs_rnn_optimizer, epoch, train_tb_logger, min_error)
         print("Training Epoch: {} Finished, error: {}".format(epoch, train_error))
         valid_error = operational_model.validate_model(valid_loader, epoch, valid_tb_logger)
         print("Validation For Epoch: {} Finished, error: {}".format(epoch, valid_error))
