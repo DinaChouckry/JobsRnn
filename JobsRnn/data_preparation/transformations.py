@@ -1160,7 +1160,8 @@ class transformation_helpers:
     @classmethod
     def string_to_int(cls, sentence, add_sos = True, add_eos=True):
         # switch sentence to indices and add <sos> , <eos>
-        sentence = list(sentence)
+        # sentence = list(sentence)
+        # print('sentence 2 ',sentence)
         # TODO: switch back to error
         ints = list(map(lambda x: cls.vocab.get(x, cls.vocab['<unk>']), str(sentence).split()))
         ints = [cls.vocab['<sos>']] + ints if add_sos else ints

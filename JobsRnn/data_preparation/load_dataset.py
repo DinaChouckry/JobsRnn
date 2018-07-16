@@ -45,6 +45,7 @@ class DatasetSplittingGenerator(Dataset):
 
     def __getitem__(self, idx):
         job_id = self.x[idx, 0]
+        job_id = job_id -1
         full_job = self.x[idx, 1]
         pair = (full_job, job_id)
 
@@ -70,7 +71,6 @@ class DatasetSplittingGenerator(Dataset):
             - src_lens (tensor): (batch_size)
 
         """
-
         def _pad_sequences(seqs):
             lengths = [len(seq) for seq in seqs]
             padded_seqs = torch.zeros(len(seqs), max(lengths), dtype=torch.long)
@@ -83,10 +83,12 @@ class DatasetSplittingGenerator(Dataset):
         # The *target* sequence is not sorted <-- It's ok, cause `pack_padded_sequence` only takes
         # *source* sequence, which is in the EncoderRNN
 
-        data.sort(key=lambda x: len(x[0]), reverse=True)
+        data.sort(key=lambda x: len(x[2]), reverse=True)
 
         # Separate source and target sequences.
         str_full_job, job_id, seq_full_job = zip(*data)
+
+
 
         # Merge sequences (from tuple of 1D tensor to 2D tensor)
         seq_full_job, len_full_job = _pad_sequences(seq_full_job)
@@ -94,9 +96,10 @@ class DatasetSplittingGenerator(Dataset):
         # (batch, seq_len) => (seq_len, batch)
         seq_full_job = seq_full_job.transpose(0, 1)
         # (batch , 1) = (1,batch)
-        job_id = job_id.transpose(0,1)
+        job_id = torch.Tensor(job_id)
+        # job_id = job_id.view(-1,1)
+        # print(job_id.size())
+        # job_id = job_id.transpose(0,1)
 
-        #(batch,1) = (1,batch)
-        len_full_job = len_full_job.transpose(0,1)
 
         return  job_id, seq_full_job, len_full_job

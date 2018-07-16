@@ -23,7 +23,7 @@ class nnTrainer:
     def __setup_batch(self, batch, data_time, start):
         batch_size = len(batch[0])
         job_id, seq_full_job, len_full_job = batch
-        data_time.update(time.time() - start)
+        # data_time.update(time.time() - start)
         seq_full_job = seq_full_job.to(self.device)
         job_id = job_id.to(self.device)
         len_full_job = len_full_job.to(self.device)
@@ -32,11 +32,16 @@ class nnTrainer:
 
     def __run_model(self, is_train , s_batch, rnn_optimizer, save_predictions):
         with torch.set_grad_enabled(is_train):
-            job_id, seq_full_job, len_full_job = s_batch
+            seq_full_job, job_id, len_full_job = s_batch
             if is_train:
                 rnn_optimizer.zero_grad()
-            rnn_output, rnn_hidden = self.rnn(seq_full_job, len_full_job)
-            loss = self.criterion(rnn_output, job_id)
+            final_output, rnn_hidden = self.rnn(seq_full_job, len_full_job)
+            topv, topi = final_output.topk(1)
+            # rnn_output = rnn_output.transpose(0,1)
+            job_id = job_id.type(torch.LongTensor)
+            # print(topi.squeeze() , job_id)
+            print("accuracy", np.sum((topi.squeeze() == job_id).numpy())/self.args.batch_size)
+            loss = self.criterion(final_output, job_id)
             if is_train:
                 loss.backward()
                 rnn_optimizer.step()
@@ -55,7 +60,7 @@ class nnTrainer:
         start = time.time()
         for batch_idx, batch in tqdm(enumerate(data_loader)):
             batch_size, s_batch = self.__setup_batch(batch, start, start) #-->
-            loss = self.__run_model(is_train, batch_size, s_batch, rnn_optimizer, save_predictions)
+            loss = self.__run_model(is_train, s_batch, rnn_optimizer, save_predictions)
 
         return loss
 

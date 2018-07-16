@@ -37,11 +37,13 @@ class RNN(nn.Module):
             - hidden : (num_layers, batch_size, hidden_size * num_directions)
         """
         # (max_src_len, batch_size) => (max_src_len, batch_size, sentence_vec_size)
+        src_seqs = src_seqs.type(torch.LongTensor)
         emb = self.embedding(src_seqs)
         packed_emb = nn.utils.rnn.pack_padded_sequence(emb, src_lens)
         packed_outputs, hidden = self.rnn(packed_emb, hidden)
         rnn_output, output_lens = nn.utils.rnn.pad_packed_sequence(packed_outputs)
-        output = self.softmax(self.out(rnn_output))
+        pred = rnn_output[-1]
+        output = self.softmax(self.out(pred))
 
         if self.bidirectional:
             # (num_layers * num_directions, batch_size, hidden_size)
