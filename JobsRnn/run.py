@@ -32,7 +32,7 @@ parser.add_argument('--start-epoch', default=0, type=int, help='manual epoch num
 parser.add_argument('--gpu-device-id', type=str, default='0', help='run on specific gpu device id')
 
 """ Input Parameters """
-package_root = "JobsRnnLocal/"
+package_root = "JobsRnn/"
 # parser.add_argument('--submission-dir', default=package_root + 'results/', type=str, help='submission dir')
 parser.add_argument('--input-dir', type=str, default=package_root + 'input/', help='root input dir')
 # parser.add_argument('--train-dir', type=str, default=package_root + 'train/', help='train root  dir')
