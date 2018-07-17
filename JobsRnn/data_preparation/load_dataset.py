@@ -9,6 +9,7 @@ class DatasetInitializer:
     def __init__(self, args):
         # kwargs = {'nrows': args.data_sample} if args.experimental else {}
         df = pd.read_csv(args.input_dir + args.train_csv)
+        self.df = df
         # df = df.sample(frac=1, random_state=args.random_seed)
         test_frac = (len(df) * args.test_frac) / (len(df) - (len(df) * args.valid_frac))
         # generates from df an array
@@ -103,3 +104,6 @@ class DatasetSplittingGenerator(Dataset):
 
 
         return  job_id, seq_full_job, len_full_job
+
+
+

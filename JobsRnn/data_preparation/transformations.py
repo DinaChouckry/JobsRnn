@@ -2,6 +2,25 @@ import random as rn
 from torch import nn
 import numpy as np
 from numpy.random.mtrand import rand, randint as random_randint, choice as random_choice
+import pandas as pd
+from .load_dataset import DatasetInitializer
+import nltk
+
+
+class dict_builder(object):
+    def __init__(self,args):
+        self.dict = []
+        self.df = DatasetInitializer(args).df
+
+    def build_dict(self):
+        self.df = self.df.dropna()
+        self.df['tokens']= self.df.apply(lambda row: nltk.word_tokenize(row['job']), axis=1)
+        self.dict = list(set([x for y in self.df['tokens'] for x in y]))
+
+    def get_dict(self):
+        if self.dict ==[]:
+            self.build_dict()
+        return self.dict
 
 
 
@@ -1197,6 +1216,8 @@ class ToIdx:
     def __call__(self, pair):
         x_idx = transformation_helpers.string_to_int(pair[0], self.add_sos, self.add_eos)
         return (pair[0],pair[1],x_idx )
+
+
 
 
 
