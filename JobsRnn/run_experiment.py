@@ -22,7 +22,6 @@ def run_experiment(args):
     train_tb_logger = SummaryWriter(args.log_dir + args.exp_name + '/train')
     valid_tb_logger = SummaryWriter(args.log_dir + args.exp_name + '/valid')
     test_tb_logger = SummaryWriter(args.log_dir + args.exp_name + '/test')
-    manual_tb_test_logger = SummaryWriter(args.log_dir + args.exp_name + '/manual_test')
     """ LOGGERS END """
 
 
@@ -94,21 +93,21 @@ def run_experiment(args):
     """" LOG Experiment parameters"""
     train_tb_logger.add_text('config', str(args))
 
-    # """ START TESTING PHASE """
-    # print("Start Testing")
-    # best_checkpoint_file = args.weights_dir + args.exp_name + '/model_best.pth.tar'
-    # print("=> loading checkpoint '{}'".format(best_checkpoint_file))
-    # rnn_checkpoint = torch.load(best_checkpoint_file)
-    # epoch = rnn_checkpoint['epoch'] - 1  #
-    # jobs_rnn.load_state_dict(rnn_checkpoint['state_dict'])
-    # operational_model.test_model(test_loader, epoch, test_tb_logger)
-    # """ END TESTING PHASE """
+    """ START TESTING PHASE """
+    print("Start Testing")
+    best_checkpoint_file = args.weights_dir + args.exp_name + '/model_best.pth.tar'
+    print("=> loading checkpoint '{}'".format(best_checkpoint_file))
+    rnn_checkpoint = torch.load(best_checkpoint_file)
+    epoch = rnn_checkpoint['epoch'] - 1  #
+    jobs_rnn.load_state_dict(rnn_checkpoint['state_dict'])
+    operational_model.test_model(test_loader, epoch, test_tb_logger)
+    """ END TESTING PHASE """
 
     """ ##############################   END RUN EXPERIMENT   ############################## """
     """ Close Loggers """
     train_tb_logger.close()
     valid_tb_logger.close()
     test_tb_logger.close()
-    manual_tb_test_logger.close()
+
 
 
