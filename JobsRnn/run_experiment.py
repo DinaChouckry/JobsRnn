@@ -1,6 +1,6 @@
 from tensorboardX import SummaryWriter
 from .data_preparation.load_dataset import DatasetInitializer , DatasetSplittingGenerator
-from .data_preparation.transformations import ToIdx, transformation_helpers , dict_builder
+from .data_preparation.transformations import ToIdx, transformation_helpers
 from .model.network import RNN
 from .model.nnTrainer import nnTrainer
 from .utils.utils import save_checkpoint
@@ -41,7 +41,6 @@ def run_experiment(args):
 
 
     """ Define Model, Optimization """
-    vocab = dict_builder(args).get_dict()
     embedding = transformation_helpers.generate_embedding(args)
     # TODO : get output size form data ,not as argument
     jobs_rnn = RNN(embedding=embedding,

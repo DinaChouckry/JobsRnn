@@ -2,6 +2,7 @@ import pandas as pd
 import torch
 from torch.utils.data import Dataset
 from sklearn.model_selection import train_test_split
+from JobsRnn.data_preparation.transformations import transformation_helpers
 
 
 class DatasetInitializer:
@@ -9,7 +10,7 @@ class DatasetInitializer:
     def __init__(self, args):
         # kwargs = {'nrows': args.data_sample} if args.experimental else {}
         df = pd.read_csv(args.input_dir + args.train_csv)
-        self.df = df
+        transformation_helpers.build_dict(df)
         # df = df.sample(frac=1, random_state=args.random_seed)
         test_frac = (len(df) * args.test_frac) / (len(df) - (len(df) * args.valid_frac))
         # generates from df an array
