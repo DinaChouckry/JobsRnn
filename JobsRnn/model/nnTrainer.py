@@ -73,7 +73,6 @@ class nnTrainer:
         logger.add_scalar("avg-loss", losses.avg, global_step=epoch)
         logger.add_scalar("F1Score", f1score_metric.f1score, global_step=epoch)
 
-
         return losses.avg , f1score_metric.f1score
 
 
