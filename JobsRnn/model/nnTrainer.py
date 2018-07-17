@@ -1,5 +1,5 @@
 import time
-
+from ..utils.metrics import AverageMeter , F1Score
 import numpy as np
 import pandas as pd
 import torch
@@ -45,7 +45,7 @@ class nnTrainer:
             if is_train:
                 loss.backward()
                 rnn_optimizer.step()
-        return loss.item()
+        return loss.item(), job_id, topi
 
 
     def __trainer(self, mode, data_loader, rnn_optimizer, epoch, logger, save_predictions=False, min_error=1e8):
@@ -58,11 +58,14 @@ class nnTrainer:
             self.rnn.eval()
 
         start = time.time()
+        losses = AverageMeter()
+        f1score_metric = F1Score()
         for batch_idx, batch in tqdm(enumerate(data_loader)):
             batch_size, s_batch = self.__setup_batch(batch, start, start) #-->
-            loss = self.__run_model(is_train, s_batch, rnn_optimizer, save_predictions)
-
-        return loss
+            loss, job_id, topi = self.__run_model(is_train, s_batch, rnn_optimizer, save_predictions)
+            losses.update(loss, batch_size)
+            f1score_metric.update(job_id,topi)
+        return losses.avg , f1score_metric.f1score
 
 
     def train_model(self, train_loader, rnn_optimizer, epoch, logger, val_min_error):
