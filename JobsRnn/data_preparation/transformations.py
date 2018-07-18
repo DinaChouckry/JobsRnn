@@ -26,9 +26,9 @@ import nltk
 class transformation_helpers:
 
     @classmethod
-    def build_dict(cls, df):
+    def build_dict(cls, df,series=None):
         df = df.dropna()
-        df['tokens']= df.apply(lambda row: nltk.word_tokenize(row['job']), axis=1)
+        df['tokens']= df.apply(lambda row: nltk.word_tokenize(row[series]), axis=1)
         words = list(set([x for y in df['tokens'] for x in y]))
         cls.vocab_list = ['<pad>', '<sos>', '<unk>', '<eos>'] + words
         cls.vocab = dict((c, i) for i, c in enumerate(cls.vocab_list))
