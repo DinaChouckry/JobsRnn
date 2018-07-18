@@ -34,6 +34,17 @@ class transformation_helpers:
         cls.vocab = dict((c, i) for i, c in enumerate(cls.vocab_list))
         cls.inv_vocab = dict((i, c) for i, c in enumerate(cls.vocab_list))
 
+
+    @classmethod
+    def normalize(cls,df,series=None):
+        df[series] = df[series].str.replace("[a-zA-Z0-9]","")
+        df[series] = df[series].str.replace("ى","ي")
+        df[series] = df[series].str.replace("ة","ه")
+        df[series] = df[series].str.replace("چ","ج")
+        for alf in ["آ","أ","إ"]:
+            df[series] = df[series].str.replace(alf, "ا")
+        return df
+
     @classmethod
     def string_to_int(cls, sentence, add_sos = True, add_eos=True):
         # switch sentence to indices and add <sos> , <eos>
@@ -74,6 +85,8 @@ class ToIdx:
     def __call__(self, pair):
         x_idx = transformation_helpers.string_to_int(pair[0], self.add_sos, self.add_eos)
         return (pair[0],pair[1],x_idx )
+
+
 
 
 

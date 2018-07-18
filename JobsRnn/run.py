@@ -42,6 +42,7 @@ parser.add_argument('--train-csv', type=str, default='jobs_input.csv', help='tra
 # parser.add_argument('--manual-test-csv', type=str, default='manual-test.csv', help='test csv file')
 parser.add_argument('--log-dir', type=str, default= package_root + 'logs/', help='logs root dir')
 parser.add_argument('--weights-dir', type=str, default=package_root + 'weights/', help='weights root dir')
+parser.add_argument('--data_frac' , type=str, default=1 , help='sample of dataset to be loaded')
 
 # """ Train Parameters """
 parser.add_argument('--batch-size', type=int, default=1, help='batch size')

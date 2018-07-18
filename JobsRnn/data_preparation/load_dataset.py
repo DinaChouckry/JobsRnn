@@ -10,8 +10,9 @@ class DatasetInitializer:
     def __init__(self, args):
         # kwargs = {'nrows': args.data_sample} if args.experimental else {}
         df = pd.read_csv(args.input_dir + args.train_csv)
+        df = df.sample(frac=args.data_frac, random_state=args.random_seed)
+        df = transformation_helpers.normalize(df,'job')
         transformation_helpers.build_dict(df)
-        # df = df.sample(frac=1, random_state=args.random_seed)
         test_frac = (len(df) * args.test_frac) / (len(df) - (len(df) * args.valid_frac))
         # generates from df an array
         self.train_x, self.valid_x = train_test_split(df.values, test_size=args.valid_frac, random_state=args.random_seed)
